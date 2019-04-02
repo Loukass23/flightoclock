@@ -1,5 +1,5 @@
 /*
-	Twenty by HTML5 UP
+	Overflow by HTML5 UP
 	html5up.net | @ajlkn
 	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
 */
@@ -8,17 +8,27 @@
 
 	var	$window = $(window),
 		$body = $('body'),
-		$header = $('#header'),
-		$banner = $('#banner');
+		settings = {
+
+			// Parallax background effect?
+				parallax: true,
+
+			// Parallax factor (lower = more intense, higher = less intense).
+				parallaxFactor: 10
+
+		};
 
 	// Breakpoints.
 		breakpoints({
-			wide:      [ '1281px',  '1680px' ],
-			normal:    [ '981px',   '1280px' ],
-			narrow:    [ '841px',   '980px'  ],
-			narrower:  [ '737px',   '840px'  ],
-			mobile:    [ null,      '736px'  ]
+			wide:    [ '1081px',  '1680px' ],
+			normal:  [ '841px',   '1080px' ],
+			narrow:  [ '737px',   '840px'  ],
+			mobile:  [ null,      '736px'  ]
 		});
+
+	// Mobile?
+		if (browser.mobile)
+			$body.addClass('is-scroll');
 
 	// Play initial animations on page load.
 		$window.on('load', function() {
@@ -28,69 +38,68 @@
 		});
 
 	// Scrolly.
+		$('.scrolly-middle').scrolly({
+			speed: 1000,
+			anchor: 'middle'
+		});
+
 		$('.scrolly').scrolly({
 			speed: 1000,
-			offset: function() { return $header.height() + 10; }
+			offset: function() { return (breakpoints.active('<=mobile') ? 70 : 190); }
 		});
 
-	// Dropdowns.
-		$('#nav > ul').dropotron({
-			mode: 'fade',
-			noOpenerFade: true,
-			expandMode: (browser.mobile ? 'click' : 'hover')
-		});
+	// Parallax background.
 
-	// Nav Panel.
+		// Disable parallax on IE/Edge (smooth scrolling is jerky), and on mobile platforms (= better performance).
+			if (browser.name == 'ie'
+			||	browser.name == 'edge'
+			||	browser.mobile)
+				settings.parallax = false;
 
-		// Button.
-			$(
-				'<div id="navButton">' +
-					'<a href="#navPanel" class="toggle"></a>' +
-				'</div>'
-			)
-				.appendTo($body);
+		if (settings.parallax) {
 
-		// Panel.
-			$(
-				'<div id="navPanel">' +
-					'<nav>' +
-						$('#nav').navList() +
-					'</nav>' +
-				'</div>'
-			)
-				.appendTo($body)
-				.panel({
-					delay: 500,
-					hideOnClick: true,
-					hideOnSwipe: true,
-					resetScroll: true,
-					resetForms: true,
-					side: 'left',
-					target: $body,
-					visibleClass: 'navPanel-visible'
-				});
+			var $dummy = $(), $bg;
 
-		// Fix: Remove navPanel transitions on WP<10 (poor/buggy performance).
-			if (browser.os == 'wp' && browser.osVersion < 10)
-				$('#navButton, #navPanel, #page-wrapper')
-					.css('transition', 'none');
+			$window
+				.on('scroll.overflow_parallax', function() {
 
-	// Header.
-		if (!browser.mobile
-		&&	$header.hasClass('alt')
-		&&	$banner.length > 0) {
+					// Adjust background position.
+						$bg.css('background-position', 'center ' + (-1 * (parseInt($window.scrollTop()) / settings.parallaxFactor)) + 'px');
 
-			$window.on('load', function() {
+				})
+				.on('resize.overflow_parallax', function() {
 
-				$banner.scrollex({
-					bottom:		$header.outerHeight(),
-					terminate:	function() { $header.removeClass('alt'); },
-					enter:		function() { $header.addClass('alt reveal'); },
-					leave:		function() { $header.removeClass('alt'); }
-				});
+					// If we're in a situation where we need to temporarily disable parallax, do so.
+						if (breakpoints.active('<=narrow')) {
 
-			});
+							$body.css('background-position', '');
+							$bg = $dummy;
+
+						}
+
+					// Otherwise, continue as normal.
+						else
+							$bg = $body;
+
+					// Trigger scroll handler.
+						$window.triggerHandler('scroll.overflow_parallax');
+
+				})
+				.trigger('resize.overflow_parallax');
 
 		}
+
+	// Poptrox.
+		$('.gallery').poptrox({
+			useBodyOverflow: false,
+			usePopupEasyClose: false,
+			overlayColor: '#0a1919',
+			overlayOpacity: 0.75,
+			usePopupDefaultStyling: false,
+			usePopupCaption: true,
+			popupLoaderText: '',
+			windowMargin: 10,
+			usePopupNav: true
+		});
 
 })(jQuery);
