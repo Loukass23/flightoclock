@@ -6,12 +6,14 @@
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "axios": "^0.18.0",
+    "material-auto-rotating-carousel": "^3.0.1",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-instafeed": "^1.0.0",
     "react-lazy-hero": "^2.0.0",
     "react-responsive-carousel": "^3.1.47",
     "react-scripts": "2.1.8",
+    "react-swipeable-views": "^0.13.1",
     "styled-components": "^4.2.0"
   },
   "scripts": {

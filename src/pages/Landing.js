@@ -7,6 +7,9 @@ import Photos from '../components/Photos'
 import Insta from '../components/Portfolio'
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
+import Hero from '../components/Hero';
+import Carousel from '../components/Carousel';
+
 
 function TabContainer(props) {
     return (
@@ -44,14 +47,14 @@ class Landing extends React.Component {
             <div className={classes.root}>
                 <AppBar position="static">
                     <Tabs centered value={value} onChange={this.handleChange}>
-                        <Tab label="Instagram" />
+                        <Tab label="Flightoclock" />
                         <Tab label="Photos" />
-                        <Tab label="Item Three" />
+                        <Tab label="Instagram" />
                     </Tabs>
                 </AppBar>
-                {value === 0 && <TabContainer><Insta /></TabContainer>}
+                {value === 0 && <TabContainer></TabContainer>}
                 {value === 1 && <TabContainer><Photos /></TabContainer>}
-                {value === 2 && <TabContainer>Item Three</TabContainer>}
+                {value === 2 && <TabContainer><Insta /></TabContainer>}
             </div>
         );
     }

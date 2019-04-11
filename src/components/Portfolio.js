@@ -55,10 +55,10 @@ export class Portfolio extends Component {
                     <Grid container spacing={8}>
                         {igData && igData.map(post => {
                             return (
-                                <Grid key={post.id} item xs={12} sm={4}>
+                                <Grid height='250px' key={post.id} item xs={12} sm={4}>
                                     <img
                                         alt="post"
-                                        style={{ width: '100%' }}
+                                        style={{ width: '100%', height: 'auto' }}
                                         src={post.images.low_resolution.url}
                                     />
                                 </Grid>
