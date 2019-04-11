@@ -3,19 +3,25 @@ import logo from './logo.svg';
 import './App.css';
 import Hero from './components/Hero';
 import Header from './components/Header';
-import Portfolio from './components/Portfolio';
-import Photos from './components/Photos';
+
 import Navbar from './components/Navbar';
 import Landing from './pages/Landing';
+import Typography from '@material-ui/core/Typography';
+import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
+import theme from './theme';
+
 
 class App extends Component {
   render() {
     return (
-      <div className="App">
-        <Navbar />
-        <Landing />
+      <MuiThemeProvider theme={theme}>
+        <div className="App">
+          <Hero />
 
-      </div>
+          <Landing />
+
+        </div>
+      </MuiThemeProvider>
     );
   }
 }

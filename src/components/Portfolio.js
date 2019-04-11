@@ -52,7 +52,7 @@ export class Portfolio extends Component {
                 </header>
                 <div className="inner gallery">
 
-                    <Grid container spacing={32}>
+                    <Grid container spacing={8}>
                         {igData && igData.map(post => {
                             return (
                                 <Grid key={post.id} item xs={12} sm={4}>
