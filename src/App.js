@@ -5,14 +5,15 @@ import Hero from './components/Hero';
 import Header from './components/Header';
 import Portfolio from './components/Portfolio';
 import Photos from './components/Photos';
+import Navbar from './components/Navbar';
+import Landing from './pages/Landing';
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header />
-        <Photos />
-        <Portfolio />
+        <Navbar />
+        <Landing />
 
       </div>
     );

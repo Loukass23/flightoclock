@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import axios from 'axios';
 import { options } from '../config/IgConfig'
 import Instafeed from "react-instafeed";
+import { Grid } from '@material-ui/core'
 
 
 
@@ -42,7 +43,7 @@ export class Portfolio extends Component {
     render() {
         const igData = this.state.igData
         const igUser = this.state.igUser
-        console.log(igUser)
+        console.log(igData)
         return (
             <article className="container box style2">
                 <header>
@@ -50,16 +51,24 @@ export class Portfolio extends Component {
                     <p>{igUser.bio}</p>
                 </header>
                 <div className="inner gallery">
-                    <div className="row gtr-0">
 
+                    <Grid container spacing={32}>
                         {igData && igData.map(post => {
                             return (
-                                <div key={post.id} className="col-3 col-12-mobile"><a href="" className="image fit"><img
-                                    src={post.images.thumbnail.url} alt="" title="Ad infinitum" /></a></div>
+                                <Grid key={post.id} item xs={12} sm={4}>
+                                    <img
+                                        alt="post"
+                                        style={{ width: '100%' }}
+                                        src={post.images.low_resolution.url}
+                                    />
+                                </Grid>
 
                             )
                         })}
-                    </div>
+
+                    </Grid>
+
+
                     {/* <div className="row gtr-0">
                         <div className="col-3 col-12-mobile"><a href="images/fulls/01.jpg" className="image fit"><img
                             src="images/thumbs/01.jpg" alt="" title="Ad infinitum" /></a></div>
