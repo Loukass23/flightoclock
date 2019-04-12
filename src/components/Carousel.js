@@ -1,5 +1,5 @@
 import { AutoRotatingCarousel } from 'material-auto-rotating-carousel';
-import Slide from '@material-ui/core/Slide';
+import { Slide } from 'material-auto-rotating-carousel';
 import Img from '../images/H&N Travel Pic/Phili.jpg';
 import Card from '@material-ui/core/Card';
 import CardActionArea from '@material-ui/core/CardActionArea';
@@ -26,7 +26,9 @@ export class Carousel extends Component {
 
 
 
-
+                <Slide >
+                    <img src={Img} alt="" />
+                </Slide>
                 <AutoRotatingCarousel
                     label='Get started'
                     open={this.state.open}
@@ -34,20 +36,7 @@ export class Carousel extends Component {
                     onStart={() => this.setState({ open: false })}
 
                 >
-                    <Slide direction="left" in={this.state.open} mountOnEnter unmountOnExit>
-                        <Card >
-                            <CardActionArea>
-                                <CardMedia
-                                    component="img"
-                                    alt="Contemplative Reptile"
 
-                                    height="140"
-                                    image={Img}
-                                    title="Contemplative Reptile"
-                                />
-                            </CardActionArea>
-                        </Card>
-                    </Slide>
                     <Slide direction="up" in={this.state.open} mountOnEnter unmountOnExit>
                         <Card >
                             <CardActionArea>

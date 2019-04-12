@@ -9,6 +9,7 @@ const { breakpoints, typography: { pxToRem } } = defaultTheme
 const theme = createMuiTheme({
     ...defaultTheme,
     overrides: {
+
         MuiTypography: {
 
             h1: {
@@ -16,11 +17,13 @@ const theme = createMuiTheme({
                 [breakpoints.down("xs")]: {
                     fontSize: "3rem"
                 }
-            }
+            },
+            padding: "0px",
         },
     },
     typography: {
         useNextVariants: true,
+
     },
     palette: {
         primary: {

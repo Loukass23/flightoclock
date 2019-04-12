@@ -8,12 +8,28 @@ import Insta from '../components/Portfolio'
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 import Hero from '../components/Hero';
-import Carousel from '../components/Carousel';
+import SlideComp from '../components/slideshow/SlideComp';
+import Slideshow from "../components/slideshow/Slideshow";
+import slide1 from "../components/slideshow/assets/Canada.png";
+import slide2 from "../components/slideshow/assets/Yosemite.png";
+import slide3 from "../components/slideshow/assets/Scotland.png";
+import slide4 from "../components/slideshow/assets/Singapore.png";
+import slide5 from "../components/slideshow/assets/Indonesia.png";
+import '../components/slideshow/custom.css'
 
+const slides = [slide1, slide2, slide3, slide4, slide5];
+
+const style = {
+    container: "screenW screenH dGray col",
+    header: "flex1 fCenter fSize2",
+    main: "flex8 white",
+    footer: "flex1 fCenter"
+};
 
 function TabContainer(props) {
+
     return (
-        <Typography component="div" style={{ padding: 8 * 3 }}>
+        <Typography component="div" style={{ padding: 0 }}>
             {props.children}
         </Typography>
     );
@@ -52,7 +68,12 @@ class Landing extends React.Component {
                         <Tab label="Instagram" />
                     </Tabs>
                 </AppBar>
-                {value === 0 && <TabContainer></TabContainer>}
+                {value === 0 && <TabContainer >
+                    <div className={style.container}>
+
+                        <Slideshow slides={slides} />
+                    </div>
+                </TabContainer>}
                 {value === 1 && <TabContainer><Photos /></TabContainer>}
                 {value === 2 && <TabContainer><Insta /></TabContainer>}
             </div>

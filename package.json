@@ -8,6 +8,7 @@
     "axios": "^0.18.0",
     "material-auto-rotating-carousel": "^3.0.1",
     "react": "^16.8.6",
+    "react-bootstrap-carousel": "^3.4.1",
     "react-dom": "^16.8.6",
     "react-instafeed": "^1.0.0",
     "react-lazy-hero": "^2.0.0",

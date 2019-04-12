@@ -1,8 +1,9 @@
 import React from 'react'
-import PanamaImg from '../images/H&N Travel Pic/Panama.png'
-import AbuImg from '../images/H&N Travel Pic/AbuDhabiMosque.png'
-import CostaImg from '../images/H&N Travel Pic/Costa_Rica.png'
-import CanadaImg from '../images/H&N Travel Pic/Canada.png'
+import PanamaImg from './slideshow/assets/Panama.png'
+import AbuImg from './slideshow/assets/AbuDhabiMosque.png'
+import CostaImg from './slideshow/assets/Costa_Rica.png'
+import CanadaImg from './slideshow/assets/Canada.png'
+
 import { Grid } from '@material-ui/core'
 
 function Photos() {
