@@ -4,7 +4,7 @@
 import React, { Component } from "react";
 import Slide from "./Slide";
 import Dots from "./Dots";
-
+import Icon from '@material-ui/core/Icon';
 //===========================================
 // CREATE STYLES OBJECT
 //===========================================
@@ -42,7 +42,7 @@ class Slideshow extends Component {
     }
 
     componentWillUnmount() {
-        clearInterval(this.carouselInterval);
+        // clearInterval(this.carouselInterval);
     }
 
     startCarousel = () => {
@@ -116,7 +116,8 @@ class Slideshow extends Component {
                     position={slide2.position}
                     transition={slide2.transition ? s.transition : ""}
                 />
-                <Dots slideId={currentId} slides={slides} />
+
+                {/* <Dots slideId={currentId} slides={slides} /> */}
             </div>
         );
     }

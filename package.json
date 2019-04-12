@@ -12,6 +12,7 @@
     "react-dom": "^16.8.6",
     "react-instafeed": "^1.0.0",
     "react-lazy-hero": "^2.0.0",
+    "react-map-gl": "^4.1.1",
     "react-responsive-carousel": "^3.1.47",
     "react-scripts": "2.1.8",
     "react-swipeable-views": "^0.13.1",

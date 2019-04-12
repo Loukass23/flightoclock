@@ -46,9 +46,9 @@ export class Portfolio extends Component {
         console.log(igData)
         return (
             <article className="container box style2">
-                <header>
-                    <h2>{igUser.full_name}</h2>
-                    <p>{igUser.bio}</p>
+                <header >
+                    <h2 id="ig-header">{igUser.full_name}</h2>
+                    <p style={{ color: "primary" }} id="ig-header">{igUser.bio}</p>
                 </header>
                 <div className="inner gallery">
 
