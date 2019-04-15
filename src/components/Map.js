@@ -32,15 +32,7 @@ class Map extends Component {
         return (
             <>
                 <AmChart />
-                {/* <MapGL
-                {...viewport}
-                width="100%"
-                height="100%"
-                mapStyle="mapbox://styles/mapbox/dark-v9"
-                onViewportChange={this._onViewportChange}
-                mapboxApiAccessToken={token}>
 
-            </MapGL> */}
             </>
         );
     }

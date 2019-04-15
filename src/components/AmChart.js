@@ -8,6 +8,7 @@ import am4themes_animated from "@amcharts/amcharts4/themes/animated";
 import am4themes_material from "@amcharts/amcharts4/themes/material";
 import Typography from '@material-ui/core/Typography';
 import { withTheme } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core'
 
 am4core.useTheme(am4themes_animated);
 am4core.useTheme(am4themes_material);
@@ -17,7 +18,8 @@ class AmChart extends Component {
 
         this.state = {
             country: null,
-            details: null
+            details: null,
+            loading: true,
 
         }
         this.initMap = this.initMap.bind(this);
@@ -27,7 +29,7 @@ class AmChart extends Component {
     }
     initMap = () => {
         let primary = this.props.theme.palette.primary.main
-        let secondary = this.props.theme.palette.primary.main
+        let secondary = this.props.theme.palette.secondary.main
         // Create map instance
         var chart = am4core.create("chartdiv", am4maps.MapChart);
 
@@ -36,6 +38,7 @@ class AmChart extends Component {
 
         // Set projection
         chart.projection = new am4maps.projections.Miller();
+        //chart.projection = new am4maps.projections.Orthographic();
 
         // Create map polygon series
         var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
@@ -67,14 +70,14 @@ class AmChart extends Component {
 
         // Configure series
         var polygonTemplate = polygonSeries.mapPolygons.template;
-        polygonTemplate.tooltipText = "{name}";
+        //polygonTemplate.tooltipText = "{name}";
         polygonTemplate.fill = am4core.color("#5CAB7D");
         polygonTemplate.propertyFields.fill = "color";
 
 
         polygonTemplate.events.on("hit", (ev) => {
 
-            ev.target.series.chart.zoomToMapObject(ev.target);
+            ev.target.series.chart.zoomToMapObject(ev.target, 3, true, 1000);
 
             console.log(ev.target.dataItem.dataContext)
             let country = ev.target.dataItem.dataContext.name
@@ -93,9 +96,10 @@ class AmChart extends Component {
             }
         }, this);
 
+
         // Create hover state and set alternative fill color
         var hs = polygonTemplate.states.create("hover");
-        hs.properties.fill = am4core.color("#5A9367");
+        hs.properties.fill = am4core.color(secondary);
 
         // Remove Antarctica
         polygonSeries.exclude = ["AQ"];
@@ -103,7 +107,11 @@ class AmChart extends Component {
         // Add zoom control
         chart.zoomControl = new am4maps.ZoomControl();
         chart.zoomControl.dy = -100;
-        chart.zoomControl.slider.height = 100;
+        chart.zoomControl.slider.height = 200;
+        chart.zoomControl.slider.align = "top"
+        this.setState({ loading: false })
+
+
     }
 
     componentWillUnmount() {
@@ -124,23 +132,25 @@ class AmChart extends Component {
     }
 
     render() {
-
+        console.log(this.state.loading)
         return (
-            <div style={{ margin: 20, padding: 10 }}>
-                <div id="info">
-                    {this.state.country && <Typography style={{}} color={'primary'} component={'h1'}>
-                        {this.state.country}
-                    </Typography>
-                    }
-                    {this.state.details && <Typography color={'secondary'} component={'p'}>
-                        {this.state.details}
-                    </Typography>
-                    }
-                </div>
-                <div id="chartdiv" style={{ width: "100%", height: "500px" }}>
-                </div>
+            <div>
 
+                <div >
+                    <div id="chartdiv" style={{ width: "100%", height: "400px" }}>
+                    </div>
+                    <div id="info">
+                        {this.state.country && <Typography ariant="display1" color={'primary'} component='h1'>
+                            {this.state.country}
+                        </Typography>
+                        }
+                        {this.state.details && <Typography color={'secondary'} component={'p'}>
+                            {this.state.details}
+                        </Typography>
+                        }
+                    </div>
 
+                </div>
             </div>
         );
     }

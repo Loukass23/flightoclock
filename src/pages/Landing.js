@@ -5,6 +5,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Photos from '../components/Photos'
 import Instagram from '../components/Instagram'
+import Map from '../components/Map'
 import AmChart from '../components/AmChart'
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
@@ -88,7 +89,7 @@ class Landing extends React.Component {
                 </TabContainer>} */}
                 {value === 1 && <TabContainer><Photos /></TabContainer>}
                 {value === 2 && <TabContainer><Instagram /></TabContainer>}
-                {value === 3 && <TabContainer><AmChart /></TabContainer>}
+                {value === 3 && <TabContainer><Map /></TabContainer>}
             </div>
         );
     }

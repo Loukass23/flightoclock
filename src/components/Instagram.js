@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Grid } from '@material-ui/core'
 import { getIgProfile, getIgData } from '../store/actions/igActions'
 import { connect } from 'react-redux'
+import Loader from 'react-loader-spinner'
 
 
 
@@ -22,8 +23,14 @@ class Instagram extends Component {
                         <p style={{ color: "primary" }} id="ig-header">{igUser.bio}</p></>}
                 </header>
                 <div className="inner gallery">
-
+                    {!igData && <Loader
+                        type="Plane"
+                        color="primary"
+                        height="100"
+                        width="100"
+                    />}
                     <Grid container spacing={8}>
+
                         {igData && igData.map(post => {
                             return (
                                 <Grid height='250px' key={post.id} item xs={12} sm={4}>

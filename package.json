@@ -16,6 +16,7 @@
     "react-dom": "^16.8.6",
     "react-instafeed": "^1.0.0",
     "react-lazy-hero": "^2.0.0",
+    "react-loader-spinner": "^2.3.0",
     "react-map-gl": "^4.1.1",
     "react-redux": "^5.1.1",
     "react-redux-firebase": "^2.2.6",
