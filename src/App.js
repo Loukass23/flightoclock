@@ -10,17 +10,13 @@ import Typography from '@material-ui/core/Typography';
 import MuiThemeProvider from '@material-ui/core/styles/MuiThemeProvider';
 import theme from './theme';
 
-//import { ReactComponent as Logo } from './images/First Flightoclock Logo.svg';
-
 class App extends Component {
   render() {
     return (
-      <MuiThemeProvider style={{ padding: "0px" }} theme={theme}>
+      <MuiThemeProvider theme={theme}>
         <Hero />
         <div className="App">
-
           <Landing />
-
         </div>
       </MuiThemeProvider>
     );

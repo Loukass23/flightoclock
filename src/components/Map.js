@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import MapGL, { GeolocateControl } from 'react-map-gl';
+import AmChart from './AmChart'
 const token = "pk.eyJ1IjoibG91a2FzczIzIiwiYSI6ImNqdWUya3JqYTBvNmM0NHJ5bWNxMXdrOXkifQ.N4FxYFa2fs1H6SYjgVKz-w"
 
 const geolocateStyle = {
@@ -13,6 +14,8 @@ class Map extends Component {
 
     state = {
         viewport: {
+            width: 400,
+            height: 400,
             latitude: 37.8,
             longitude: 96,
             zoom: 3,
@@ -27,7 +30,9 @@ class Map extends Component {
         const { viewport } = this.state;
 
         return (
-            <MapGL
+            <>
+                <AmChart />
+                {/* <MapGL
                 {...viewport}
                 width="100%"
                 height="100%"
@@ -35,7 +40,8 @@ class Map extends Component {
                 onViewportChange={this._onViewportChange}
                 mapboxApiAccessToken={token}>
 
-            </MapGL>
+            </MapGL> */}
+            </>
         );
     }
 

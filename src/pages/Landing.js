@@ -4,7 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Photos from '../components/Photos'
-import Insta from '../components/Portfolio'
+import Instagram from '../components/Instagram'
 import Map from '../components/Map'
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
@@ -19,7 +19,6 @@ import slide5 from "../components/slideshow/assets/Indonesia.png";
 import '../components/slideshow/custom.css'
 
 const slides = [slide1, slide2, slide3, slide4, slide5];
-
 const style = {
     container: "screenW screenH dGray col",
     header: "flex1 fCenter fSize2",
@@ -77,7 +76,7 @@ class Landing extends React.Component {
                     </div>
                 </TabContainer>}
                 {value === 1 && <TabContainer><Photos /></TabContainer>}
-                {value === 2 && <TabContainer><Insta /></TabContainer>}
+                {value === 2 && <TabContainer><Instagram /></TabContainer>}
                 {value === 3 && <TabContainer><Map /></TabContainer>}
             </div>
         );

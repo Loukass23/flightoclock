@@ -58,7 +58,7 @@
 
 /*====== IMAGE ======*/
 .imgCover {
-    object-fit: cover;
+    object-fit: contain;
 }
 
 /*====== OVERFLOW ======*/
