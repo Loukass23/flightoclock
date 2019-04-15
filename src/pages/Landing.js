@@ -5,10 +5,9 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Photos from '../components/Photos'
 import Instagram from '../components/Instagram'
-import Map from '../components/Map'
+import AmChart from '../components/AmChart'
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
-import Hero from '../components/Hero';
 import SlideComp from '../components/slideshow/SlideComp';
 import Slideshow from "../components/slideshow/Slideshow";
 import slide1 from "../components/slideshow/assets/Canada.png";
@@ -47,9 +46,21 @@ const styles = theme => ({
 });
 
 class Landing extends React.Component {
-    state = {
-        value: 0,
-    };
+    _isMounted = false;
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            value: 0,
+
+        }
+    }
+    componentDidMount() {
+        this._isMounted = true;
+    }
+    componentWillUnmount() {
+        this._isMounted = false;
+    }
 
     handleChange = (event, value) => {
         this.setState({ value });
@@ -69,15 +80,15 @@ class Landing extends React.Component {
                         <Tab label="Map" />
                     </Tabs>
                 </AppBar>
-                {value === 0 && <TabContainer >
+                {/* {value === 0 && <TabContainer >
                     <div className={style.container}>
 
                         <Slideshow slides={slides} />
                     </div>
-                </TabContainer>}
+                </TabContainer>} */}
                 {value === 1 && <TabContainer><Photos /></TabContainer>}
                 {value === 2 && <TabContainer><Instagram /></TabContainer>}
-                {value === 3 && <TabContainer><Map /></TabContainer>}
+                {value === 3 && <TabContainer><AmChart /></TabContainer>}
             </div>
         );
     }

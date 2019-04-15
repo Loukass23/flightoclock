@@ -8,6 +8,10 @@ const defaultTheme = createMuiTheme({})
 const { breakpoints, typography: { pxToRem } } = defaultTheme
 const theme = createMuiTheme({
     ...defaultTheme,
+    typography: {
+        useNextVariants: true,
+
+    },
     overrides: {
 
         MuiTypography: {
@@ -18,12 +22,8 @@ const theme = createMuiTheme({
                     fontSize: "3rem"
                 }
             },
-            padding: "0px",
+           
         },
-    },
-    typography: {
-        useNextVariants: true,
-
     },
     palette: {
         primary: {
