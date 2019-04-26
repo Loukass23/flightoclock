@@ -1,7 +1,10 @@
 import React, { Component } from 'react';
-//import logo from './logo.svg';
-//import './App.css';
+import { AmchartsReact } from 'amchart4-react'
+import Loader from 'react-loader-spinner'
+
+
 import * as am4core from "@amcharts/amcharts4/core";
+import * as am4charts from "@amcharts/amcharts4/charts";
 import * as am4maps from "@amcharts/amcharts4/maps";
 import am4geodata_worldLow from "@amcharts/amcharts4-geodata/worldLow";
 import am4themes_animated from "@amcharts/amcharts4/themes/animated";
@@ -20,18 +23,33 @@ class AmChart extends Component {
             country: null,
             details: null,
             loading: true,
+            chart: null,
 
         }
         this.initMap = this.initMap.bind(this);
+
     }
-    componentDidMount() {
-        this.initMap();
+
+    async componentDidMount() {
+
+        let chart = am4core.create("chartdiv", am4maps.MapChart);
+        await this.sleep(500);
+        this.initMap(chart);
+
+
+
+
+
     }
-     initMap = () => {
-        let primary = this.props.theme.palette.primary.main
-        let secondary = this.props.theme.palette.secondary.main
+    sleep = (ms) => {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    initMap = async (chart) => {
+
+        const primary = this.props.theme.palette.primary.main
+        const secondary = this.props.theme.palette.secondary.main
         // Create map instance
-        var chart = am4core.create("chartdiv", am4maps.MapChart);
+        //var chart = am4core.create("chartdiv", am4maps.MapChart);
 
         // Set map definition
         chart.geodata = am4geodata_worldLow;
@@ -42,6 +60,7 @@ class AmChart extends Component {
 
         // Create map polygon series
         var polygonSeries = chart.series.push(new am4maps.MapPolygonSeries());
+
 
         // Make map load polygon (like country names) data from GeoJSON
         polygonSeries.useGeodata = true;
@@ -70,11 +89,54 @@ class AmChart extends Component {
 
         // Configure series
         var polygonTemplate = polygonSeries.mapPolygons.template;
-        //polygonTemplate.tooltipText = "{name}";
+        polygonTemplate.tooltipText = "{name}";
+
         polygonTemplate.fill = am4core.color("#5CAB7D");
         polygonTemplate.propertyFields.fill = "color";
 
+        // set on click event
+        this.mapClickEvent(polygonTemplate)
 
+        // polygonTemplate.events.on("hit", (ev) => {
+
+        //     ev.target.series.chart.zoomToMapObject(ev.target, 3, true, 1000);
+
+
+        //     let country = ev.target.dataItem.dataContext.name
+
+
+        //     this.setState({ country })
+        //     // get object info
+        //     let details = ev.target.dataItem.dataContext.description;
+        //     console.log(ev.target.dataItem.dataContext)
+
+        //     if (details) {
+        //         this.setState({ details })
+        //     }
+        //     else {
+        //         this.setState({ details: null, chart })
+        //     }
+        // }, this);
+
+
+        // Create hover state and set alternative fill color
+        var hs = polygonTemplate.states.create("hover");
+        hs.properties.fill = am4core.color(secondary);
+        console.log(hs)
+
+        // Remove Antarctica
+        polygonSeries.exclude = ["AQ"];
+
+        // Add zoom control
+        chart.zoomControl = new am4maps.ZoomControl();
+        chart.zoomControl.dy = -100;
+        chart.zoomControl.slider.height = 200;
+        chart.zoomControl.slider.align = "top"
+        this.setState({ loading: false })
+
+    }
+
+    mapClickEvent(polygonTemplate) {
         polygonTemplate.events.on("hit", (ev) => {
 
             ev.target.series.chart.zoomToMapObject(ev.target, 3, true, 1000);
@@ -95,24 +157,6 @@ class AmChart extends Component {
                 this.setState({ details: null })
             }
         }, this);
-
-
-        // Create hover state and set alternative fill color
-        var hs = polygonTemplate.states.create("hover");
-        hs.properties.fill = am4core.color(secondary);
-        console.log(hs)
-
-        // Remove Antarctica
-        polygonSeries.exclude = ["AQ"];
-
-        // Add zoom control
-        chart.zoomControl = new am4maps.ZoomControl();
-        chart.zoomControl.dy = -100;
-        chart.zoomControl.slider.height = 200;
-        chart.zoomControl.slider.align = "top"
-        this.setState({ loading: false })
-
-
     }
 
     componentWillUnmount() {
@@ -120,25 +164,22 @@ class AmChart extends Component {
             this.chart.dispose();
         }
     }
-    handleChange = (e) => {
-        console.log(e)
-        // this.setState({
-        //     [e.target.id]: e.target.value
-        // })
-    }
-    handleCountry = (ev) => {
-        // let country = ev.target.dataItem.dataContext.name
-        console.log(ev);
-        //this.setState({ country });
-    }
 
     render() {
-        console.log(this.state.loading)
+        console.log(this.state.chart)
         return (
             <div>
 
-                <div >
-                    <div id="chartdiv" style={{ width: "100%", height: "400px" }}>
+                <div>
+                    {this.state.loading &&
+                        <Loader
+                            type="Plane"
+                            color="primary"
+                            height="100"
+                            width="100"
+                        />}
+                    <div id="chartdiv" style={{ width: "100%", height: "70vh" }}>
+
                     </div>
                     <div id="info">
                         {this.state.country && <Typography ariant="display1" color={'primary'} component='h1'>

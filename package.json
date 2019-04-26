@@ -8,6 +8,7 @@
     "@amcharts/amcharts4-geodata": "^4.1.4",
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
+    "amchart4-react": "^1.0.4",
     "amcharts3": "^3.21.14",
     "axios": "^0.18.0",
     "firebase": "^5.8.5",
