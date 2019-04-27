@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { Grid } from '@material-ui/core'
+import Typography from '@material-ui/core/Typography';
+
 import { getIgProfile, getIgData } from '../store/actions/igActions'
 import { connect } from 'react-redux'
 import Loader from 'react-loader-spinner'
-
+import Paper from '@material-ui/core/Paper';
 
 
 class Instagram extends Component {
@@ -19,8 +21,12 @@ class Instagram extends Component {
         return (
             <article className="container box style2">
                 <header >
-                    {igUser && <><h2 id="ig-header">{igUser.full_name}</h2>
-                        <p style={{ color: "primary" }} id="ig-header">{igUser.bio}</p></>}
+                    {igUser &&
+                        <Paper style={{ padding: 6 }} elevation={3}>
+                            <Typography variant="h6" color={'primary'} >{igUser.full_name}</Typography>
+                            <Typography variant="subtitle1" color={'secondary'} >{igUser.bio}</Typography>
+                        </Paper>}
+
                 </header>
                 <div className="inner gallery">
                     {!igData && <Loader
@@ -34,11 +40,12 @@ class Instagram extends Component {
                         {igData && igData.map(post => {
                             return (
                                 <Grid height='250px' key={post.id} item xs={12} sm={4}>
-                                    <img
-                                        alt="post"
-                                        style={{ width: '100%', height: 'auto' }}
-                                        src={post.images.low_resolution.url}
-                                    />
+                                    <a href={post.link} target="_blank"  >
+                                        <img
+                                            alt="post"
+                                            style={{ width: '100%', height: 'auto' }}
+                                            src={post.images.low_resolution.url}
+                                        /></a>
                                 </Grid>
 
                             )

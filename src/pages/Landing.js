@@ -9,16 +9,16 @@ import Map from '../components/Map'
 import AmChart from '../components/AmChart2'
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
-import SlideComp from '../components/slideshow/SlideComp';
-import Slideshow from "../components/slideshow/Slideshow";
-import slide1 from "../components/slideshow/assets/Canada.png";
-import slide2 from "../components/slideshow/assets/Yosemite.png";
-import slide3 from "../components/slideshow/assets/Scotland.png";
-import slide4 from "../components/slideshow/assets/Singapore.png";
-import slide5 from "../components/slideshow/assets/Indonesia.png";
-import '../components/slideshow/custom.css'
+// import SlideComp from '../components/slideshow/SlideComp';
+// import Slideshow from "../components/slideshow/Slideshow";
+// import slide1 from "../components/slideshow/assets/Canada.png";
+// import slide2 from "../components/slideshow/assets/Yosemite.png";
+// import slide3 from "../components/slideshow/assets/Scotland.png";
+// import slide4 from "../components/slideshow/assets/Singapore.png";
+// import slide5 from "../components/slideshow/assets/Indonesia.png";
+// // import '../components/slideshow/custom.css'
 
-const slides = [slide1, slide2, slide3, slide4, slide5];
+// const slides = [slide1, slide2, slide3, slide4, slide5];
 const style = {
     container: "screenW screenH dGray col",
     header: "flex1 fCenter fSize2",
@@ -29,7 +29,7 @@ const style = {
 function TabContainer(props) {
 
     return (
-        <Typography component="div" style={{ padding: 0 }}>
+        <Typography variant="h6" style={{ padding: 0 }}>
             {props.children}
         </Typography>
     );
@@ -53,7 +53,6 @@ class Landing extends React.Component {
 
         this.state = {
             value: 0,
-
         }
     }
     componentDidMount() {
@@ -79,6 +78,7 @@ class Landing extends React.Component {
                         <Tab label="Photos" />
                         <Tab label="Instagram" />
                         <Tab label="Map" />
+
                     </Tabs>
                 </AppBar>
                 {/* {value === 0 && <TabContainer >

@@ -11,9 +11,10 @@ import Menu from '@material-ui/core/Menu';
 import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
-import SearchIcon from '@material-ui/icons/Search';
+import GroupIcon from '@material-ui/icons/Group';
+import HomeIcon from '@material-ui/icons/Home';
 import AccountCircle from '@material-ui/icons/AccountCircle';
-import MailIcon from '@material-ui/icons/Mail';
+import MapIcon from '@material-ui/icons/Map';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Drawer from '@material-ui/core/Drawer';
@@ -22,15 +23,14 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import { createMuiTheme } from '@material-ui/core/styles';
-import red from '@material-ui/core/colors/red';
+import PhotoIcon from '@material-ui/icons/Photo';
+import Logo1 from '../images/logo/flight 1 of 3.png'
+import Logo2 from '../images/logo/flight 2 of 3.png'
+import Logo3 from '../images/logo/flight 3 of 3.png'
+import { Link } from 'react-router-dom'
 
-const theme = createMuiTheme({
-    palette: {
-        primary: red,
-    },
-});
+
+
 const styles = theme => ({
     root: {
         width: '100%',
@@ -48,27 +48,13 @@ const styles = theme => ({
             display: 'block',
         },
     },
-    search: {
-        position: 'relative',
-        borderRadius: theme.shape.borderRadius,
-        backgroundColor: fade(theme.palette.common.white, 0.15),
-        '&:hover': {
-            backgroundColor: fade(theme.palette.common.white, 0.25),
-        },
-        marginRight: theme.spacing.unit * 2,
-        marginLeft: 0,
-        width: '100%',
-        [theme.breakpoints.up('sm')]: {
-            marginLeft: theme.spacing.unit * 3,
-            width: 'auto',
-        },
-    },
-    searchIcon: {
-        width: theme.spacing.unit * 9,
-        height: '100%',
-        position: 'absolute',
-        pointerEvents: 'none',
+    logo: {
+        // width: theme.spacing.unit * 9,
+        // height: '100%',
+        // position: 'absolute',
+        // pointerEvents: 'none',
         display: 'flex',
+        flexGrow: 1,
         alignItems: 'center',
         justifyContent: 'center',
     },
@@ -101,12 +87,20 @@ const styles = theme => ({
     },
 });
 
+
 class Navbar extends React.Component {
-    state = {
-        anchorEl: null,
-        mobileMoreAnchorEl: null,
-        mobileOpen: false,
-    };
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            anchorEl: null,
+            mobileMoreAnchorEl: null,
+            mobileOpen: false,
+
+        }
+    }
+
     handleDrawerToggle = () => {
         this.setState(state => ({ mobileOpen: !state.mobileOpen }));
     };
@@ -143,15 +137,40 @@ class Navbar extends React.Component {
                     paper: classes.drawerPaper,
                 }}
             >
-
                 <Divider />
-                <List>
-                    {['Beers', 'Favorites', 'Sign In', 'Log In'].map((text, index) => (
+                <List onClick={this.handleDrawerToggle}>
+                    <ListItem component={Link} to="/" button >
+                        <ListItemIcon ><HomeIcon color="primary" /></ListItemIcon>
+                        <ListItemText primary='Home' />
+                    </ListItem>
+                    <ListItem component={Link} to="/" button >
+                        <ListItemIcon ><GroupIcon color="primary" /></ListItemIcon>
+                        <ListItemText primary='About Us' />
+                    </ListItem>
+
+
+                    <ListItem component={Link} to="/" button >
+                        <ListItemIcon ><PhotoIcon color="primary" /></ListItemIcon>
+                        <ListItemText primary='Photos' />
+                    </ListItem>
+
+
+                    <ListItem component={Link} to="/ig" button >
+                        <ListItemIcon ><GroupIcon color="primary" /></ListItemIcon>
+                        <ListItemText primary='Instagram' />
+                    </ListItem>
+
+                    <ListItem color="primary" component={Link} to="/map" button >
+                        <ListItemIcon ><MapIcon color="primary" /></ListItemIcon>
+                        <ListItemText primary='Map' />
+                    </ListItem>
+
+                    {/* {['About us', 'Photos', 'Instagram', 'Map'].map((text, index) => (
                         <ListItem button key={text}>
-                            <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
+                            <ListItemIcon color={red}>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
                             <ListItemText primary={text} />
                         </ListItem>
-                    ))}
+                    ))} */}
                 </List>
             </Drawer>
         );
@@ -176,28 +195,14 @@ class Navbar extends React.Component {
                 open={isMobileMenuOpen}
                 onClose={this.handleMenuClose}
             >
-                <MenuItem onClick={this.handleMobileMenuClose}>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={4} color="secondary">
-                            <MailIcon />
-                        </Badge>
-                    </IconButton>
-                    <p>Messages</p>
-                </MenuItem>
-                <MenuItem onClick={this.handleMobileMenuClose}>
-                    <IconButton color="inherit">
-                        <Badge badgeContent={11} color="secondary">
-                            <NotificationsIcon />
-                        </Badge>
-                    </IconButton>
-                    <p>Notifications</p>
-                </MenuItem>
+
                 <MenuItem onClick={this.handleProfileMenuOpen}>
                     <IconButton color="inherit">
                         <AccountCircle />
                     </IconButton>
-                    <p>Profile</p>
+                    <p>Log In</p>
                 </MenuItem>
+
             </Menu>
         );
 
@@ -213,33 +218,21 @@ class Navbar extends React.Component {
                         >
                             <MenuIcon />
                         </IconButton>
-                        <Typography className={classes.title} variant="h6" color="inherit" noWrap>
+                        {/* <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                             Flightoclock
-            </Typography>
-                        {/* <div className={classes.search}>
-                            <div className={classes.searchIcon}>
-                                <SearchIcon />
-                            </div>
-                            <InputBase
-                                placeholder="Search…"
-                                classes={{
-                                    root: classes.inputRoot,
-                                    input: classes.inputInput,
-                                }}
-                            />
-                        </div> */}
-                        <div className={classes.grow} />
+                         </Typography> */}
+                         
+                        <div className={classes.logo}>
+                        <Link to="/">
+                            <img src={Logo1} height={50} alt="" />
+                            <img id="logo-icon" src={Logo2} height={50} alt="" />
+                            <img src={Logo3} height={50} alt="" />
+                            </Link>
+                        </div>
+
+                        {/* <div className={classes.grow} /> */}
                         <div className={classes.sectionDesktop}>
-                            <IconButton color="inherit">
-                                <Badge badgeContent={4} color="secondary">
-                                    <MailIcon />
-                                </Badge>
-                            </IconButton>
-                            <IconButton color="inherit">
-                                <Badge badgeContent={17} color="secondary">
-                                    <NotificationsIcon />
-                                </Badge>
-                            </IconButton>
+
                             <IconButton
                                 aria-owns={isMenuOpen ? 'material-appbar' : undefined}
                                 aria-haspopup="true"

@@ -141,11 +141,11 @@ class AmChart extends Component {
                     <div id="chartdiv" style={{ width: "100%", height: "400px" }}>
                     </div>
                     <div id="info">
-                        {this.state.country && <Typography ariant="display1" color={'primary'} component='h1'>
+                        {this.state.country && <Typography variant="h1" color={'primary'} >
                             {this.state.country}
                         </Typography>
                         }
-                        {this.state.details && <Typography color={'secondary'} component={'p'}>
+                        {this.state.details && <Typography color={'secondary'} variant="subtitle1">
                             {this.state.details}
                         </Typography>
                         }
