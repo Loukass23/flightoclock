@@ -3,19 +3,14 @@ import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import { fade } from '@material-ui/core/styles/colorManipulator';
 import { withStyles } from '@material-ui/core/styles';
 import MenuIcon from '@material-ui/icons/Menu';
 import GroupIcon from '@material-ui/icons/Group';
 import HomeIcon from '@material-ui/icons/Home';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import MapIcon from '@material-ui/icons/Map';
-import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
@@ -143,13 +138,13 @@ class Navbar extends React.Component {
                         <ListItemIcon ><HomeIcon color="primary" /></ListItemIcon>
                         <ListItemText primary='Home' />
                     </ListItem>
-                    <ListItem component={Link} to="/" button >
+                    <ListItem component={Link} to="/about" button >
                         <ListItemIcon ><GroupIcon color="primary" /></ListItemIcon>
                         <ListItemText primary='About Us' />
                     </ListItem>
 
 
-                    <ListItem component={Link} to="/" button >
+                    <ListItem component={Link} to="/photos" button >
                         <ListItemIcon ><PhotoIcon color="primary" /></ListItemIcon>
                         <ListItemText primary='Photos' />
                     </ListItem>
@@ -221,12 +216,12 @@ class Navbar extends React.Component {
                         {/* <Typography className={classes.title} variant="h6" color="inherit" noWrap>
                             Flightoclock
                          </Typography> */}
-                         
+
                         <div className={classes.logo}>
-                        <Link to="/">
-                            <img src={Logo1} height={50} alt="" />
-                            <img id="logo-icon" src={Logo2} height={50} alt="" />
-                            <img src={Logo3} height={50} alt="" />
+                            <Link to="/">
+                                <img src={Logo1} height={50} alt="" />
+                                <img id="logo-icon" src={Logo2} height={50} alt="" />
+                                <img src={Logo3} height={50} alt="" />
                             </Link>
                         </div>
 

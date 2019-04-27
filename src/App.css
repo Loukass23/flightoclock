@@ -36,7 +36,7 @@
 #banner {
   padding: 20px;
   background-image: linear-gradient(#75757504, #c2185c5b),
-    url("./images/banner.png");
+    url("./images/logo/banner.png");
   height: 80px;
   background-position: center;
   background-repeat: no-repeat;

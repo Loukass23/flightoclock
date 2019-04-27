@@ -18,7 +18,7 @@ import { Grid } from '@material-ui/core'
 
 am4core.useTheme(am4themes_animated);
 am4core.useTheme(am4themes_material);
-class AmChart extends Component {
+class Map extends Component {
     constructor(props) {
         super(props);
 
@@ -204,4 +204,4 @@ class AmChart extends Component {
 }
 
 
-export default withTheme()(AmChart);
+export default withTheme()(Map);

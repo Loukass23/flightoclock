@@ -4,9 +4,9 @@ import { withStyles } from '@material-ui/core/styles';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Photos from '../components/Photos'
-import Instagram from '../components/Instagram'
-import Map from '../components/Map'
-import AmChart from '../components/AmChart2'
+import Instagram from '../pages/Instagram'
+
+import AmChart from '../pages/Map'
 import AppBar from '@material-ui/core/AppBar';
 import Typography from '@material-ui/core/Typography';
 // import SlideComp from '../components/slideshow/SlideComp';

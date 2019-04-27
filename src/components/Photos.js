@@ -1,54 +1,65 @@
-// import React from 'react'
-// import PanamaImg from './slideshow/assets/Panama.png'
-// import AbuImg from './slideshow/assets/AbuDhabiMosque.png'
-// import CostaImg from './slideshow/assets/Costa_Rica.png'
-// import CanadaImg from './slideshow/assets/Canada.png'
-// import { Grid } from '@material-ui/core'
-// import slide1 from "../components/slideshow/assets/Canada.png";
-// import slide2 from "../components/slideshow/assets/Yosemite.png";
-// import slide3 from "../components/slideshow/assets/Scotland.png";
-// import slide4 from "../components/slideshow/assets/Singapore.png";
-// import slide5 from "../components/slideshow/assets/Indonesia.png";
-// import '../components/slideshow/custom.css'
+import React from 'react';
+import Gallery from 'react-photo-gallery';
+import Lightbox from 'react-images';
 
-// const slides = [slide1, slide2, slide3, slide4, slide5];
+const photos = [
+    { src: 'https://source.unsplash.com/2ShvY8Lf6l0/800x599', width: 4, height: 3 },
+    { src: 'https://source.unsplash.com/Dm-qxdynoEc/800x799', width: 1, height: 1 },
+    { src: 'https://source.unsplash.com/qDkso9nvCg0/600x799', width: 3, height: 4 },
+    { src: 'https://source.unsplash.com/iecJiKe_RNg/600x799', width: 3, height: 4 },
+    { src: 'https://source.unsplash.com/epcsn8Ed8kY/600x799', width: 3, height: 4 },
+    { src: 'https://source.unsplash.com/NQSWvyVRIJk/800x599', width: 4, height: 3 },
+    { src: 'https://source.unsplash.com/zh7GEuORbUw/600x799', width: 3, height: 4 },
+    { src: 'https://source.unsplash.com/PpOHJezOalU/800x599', width: 4, height: 3 },
+    { src: 'https://source.unsplash.com/I1ASdgphUH4/800x599', width: 4, height: 3 }
+];
 
-// function Photos() {
-//     return (
-//         <Grid container spacing={0}>
-//             {slides && slides.map(slide => {
-//                 return (<Grid item xs={12} sm={4}>
-//                     <img
-//                         alt="post"
-//                         style={{ width: '100%' }}
-//                         src={slide}
-//                     />
-//                 </Grid>)
-//             })}
-//             <Grid item xs={12} sm={4}>
-//                 <img
-//                     alt="post"
-//                     style={{ width: '100%' }}
-//                     src={AbuImg}
-//                 />
-//             </Grid>
-//             <Grid item xs={12} sm={4}>
-//                 <img
-//                     alt="post"
-//                     style={{ width: '100%' }}
-//                     src={CostaImg}
-//                 />
-//             </Grid>
-//             <Grid item xs={12} sm={4}>
-//                 <img
-//                     alt="post"
-//                     style={{ width: '100%' }}
-//                     src={CanadaImg}
-//                 />
-//             </Grid>
-//         </Grid>
+class Photos extends React.Component {
+    constructor() {
+        super();
+        this.state = { currentImage: 0 };
+        this.closeLightbox = this.closeLightbox.bind(this);
+        this.openLightbox = this.openLightbox.bind(this);
+        this.gotoNext = this.gotoNext.bind(this);
+        this.gotoPrevious = this.gotoPrevious.bind(this);
+    }
+    openLightbox(event, obj) {
+        this.setState({
+            currentImage: obj.index,
+            lightboxIsOpen: true,
+        });
+    }
+    closeLightbox() {
+        this.setState({
+            currentImage: 0,
+            lightboxIsOpen: false,
+        });
+    }
+    gotoPrevious() {
+        this.setState({
+            currentImage: this.state.currentImage - 1,
+        });
+    }
+    gotoNext() {
+        this.setState({
+            currentImage: this.state.currentImage + 1,
+        });
+    }
+    render() {
+        return (
+            <div className="photo">
+                <Gallery photos={photos} onClick={this.openLightbox} />
+                <Lightbox images={photos}
+                    onClose={this.closeLightbox}
+                    onClickPrev={this.gotoPrevious}
+                    onClickNext={this.gotoNext}
+                    currentImage={this.state.currentImage}
+                    isOpen={this.state.lightboxIsOpen}
+                />
+            </div>
+        )
+    }
+}
 
-//     )
-// }
+export default Photos
 
-// export default Photos

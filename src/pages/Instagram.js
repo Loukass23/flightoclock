@@ -25,6 +25,7 @@ class Instagram extends Component {
                         <Paper style={{ padding: 6 }} elevation={3}>
                             <Typography variant="h6" color={'primary'} >{igUser.full_name}</Typography>
                             <Typography variant="subtitle1" color={'secondary'} >{igUser.bio}</Typography>
+                        <Typography variant="subtitle1" color={'secondary'} >{igUser.counts.followed_by}</Typography>
                         </Paper>}
 
                 </header>
