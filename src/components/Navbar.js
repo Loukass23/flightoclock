@@ -23,6 +23,10 @@ import Logo1 from '../images/logo/flight 1 of 3.png'
 import Logo2 from '../images/logo/flight 2 of 3.png'
 import Logo3 from '../images/logo/flight 3 of 3.png'
 import { Link } from 'react-router-dom'
+import SignIn from '../components/auth/SignIn'
+import Icon from '@material-ui/core/Icon';
+import classNames from 'classnames';
+
 
 
 
@@ -80,6 +84,15 @@ const styles = theme => ({
             display: 'none',
         },
     },
+    icon: {
+        // margin: theme.spacing.unit * 2,
+    },
+    // iconHover: {
+    //     margin: theme.spacing.unit * 2,
+    //     '&:hover': {
+    //          color: red[800],
+    //     },
+    // },
 });
 
 
@@ -151,13 +164,19 @@ class Navbar extends React.Component {
 
 
                     <ListItem component={Link} to="/ig" button >
-                        <ListItemIcon ><GroupIcon color="primary" /></ListItemIcon>
+                        <ListItemIcon ><Icon className={classNames(classes.icon, 'fab fa-instagram')} color="primary" />
+                        </ListItemIcon>
                         <ListItemText primary='Instagram' />
                     </ListItem>
 
                     <ListItem color="primary" component={Link} to="/map" button >
                         <ListItemIcon ><MapIcon color="primary" /></ListItemIcon>
                         <ListItemText primary='Map' />
+                    </ListItem>
+                    <ListItem component={Link} to="/posts" button >
+                        <ListItemIcon ><Icon className={classNames(classes.icon, 'fas fa-newspaper')} color="primary" />
+                        </ListItemIcon>
+                        <ListItemText primary='Posts' />
                     </ListItem>
 
                     {/* {['About us', 'Photos', 'Instagram', 'Map'].map((text, index) => (
@@ -167,6 +186,7 @@ class Navbar extends React.Component {
                         </ListItem>
                     ))} */}
                 </List>
+
             </Drawer>
         );
         const renderMenu = (
