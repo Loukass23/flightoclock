@@ -7,6 +7,54 @@ import firebase from "firebase";
 import { firestoreConnect } from 'react-redux-firebase'
 import { bindActionCreators } from 'redux'
 import countryList from 'react-select-country-list'
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import { Grid } from '@material-ui/core'
+import Fab from '@material-ui/core/Fab';
+import { withStyles } from '@material-ui/core/styles';
+import InputLabel from '@material-ui/core/InputLabel';
+import FormHelperText from '@material-ui/core/FormHelperText';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+import NativeSelect from '@material-ui/core/NativeSelect';
+import Input from '@material-ui/core/Input';
+import LinearProgress from '@material-ui/core/LinearProgress';
+
+
+
+const styles = theme => ({
+    container: {
+        display: 'flex',
+        flexWrap: 'wrap',
+    },
+    textField: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
+    textArea: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 800,
+    },
+    input: {
+        display: 'none',
+    },
+    inputLabel: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        width: 200,
+    },
+    formControl: {
+        marginTop: 12,
+    },
+    dense: {
+        marginTop: 19,
+    },
+    menu: {
+        width: 200,
+    },
+});
 
 class addPost extends Component {
 
@@ -20,6 +68,7 @@ class addPost extends Component {
         file: null,
         isUploading: false,
         progress: 0,
+        buffer: 0,
         photoURL: "",
         duration: null,
         price: null,
@@ -37,11 +86,14 @@ class addPost extends Component {
         console.log(this.state)
         e.preventDefault();
         this.props.createPost(this.state)
-        this.props.history.push('/')
+        this.props.history.push('/posts')
     }
     handleUpload = () => {
         const storageService = firebase.storage();
         const storageRef = storageService.ref();
+        const diff = Math.random() * 10;
+
+
 
         console.log(this.state.file.name)
         this.setState({ isUploading: true, progress: 0 })
@@ -51,14 +103,14 @@ class addPost extends Component {
         uploadTask.on('state_changed', (snapshot) => {
             console.log(snapshot)
             let prog = Math.round(snapshot.bytesTransferred * 100 / snapshot.totalBytes)
-            this.setState({ progress: prog });
+            this.setState({ progress: prog, buffer: prog + diff });
 
         }, (error) => {
 
             console.log(error);
         }, () => {
             console.log('success');
-            this.setState({ isUploading: false, progress: 100 })
+            this.setState({ isUploading: false, progress: 100, })
             firebase
                 .storage()
                 .ref("posts")
@@ -74,7 +126,7 @@ class addPost extends Component {
         const progressBarUp = {
             width: this.state.progress + "%"
         }
-        const { input } = this.props
+        const { input, classes } = this.props
         //if (!auth.uid) return <Redirect to='/signin' />
         console.log(this.props)
         return (
@@ -88,76 +140,95 @@ class addPost extends Component {
                         Add New Post
                     </h4>
                 </div>
-                <form onSubmit={this.handleSubmit} className="white">
+                <form onSubmit={this.handleSubmit} className={classes.container} noValidate autoComplete="on">
+                    <Grid container>
+                        <Grid item xs={12} sm={6}>
+                            <TextField
+                                required
+                                id="title"
+                                label="Title"
+                                className={classes.textField}
+                                margin="normal"
+                                type="text"
+                                onChange={this.handleChange}
+                            />
+                        </Grid>
 
+                        <Grid item xs={12} sm={6}>
+                            <FormControl className={classes.formControl}>
+                                <InputLabel htmlFor="countryName">Country</InputLabel>
+                                <Select
+                                    native
+                                    value={this.state.value}
+                                    onChange={this.handleChange}
+                                    className={classes.inputLabel}
+                                    inputProps={{
+                                        name: 'country',
+                                        id: 'countryName',
+                                    }}
+                                >
+                                    {this.state.options && this.state.options.map((country, i) => {
+                                        return (
+                                            <option htmlFor="countryName"
+                                                key={i} value={country.label}>
+                                                {country.label}
+                                            </option>
+                                        )
+                                    })}
+                                </Select>
+                            </FormControl>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <TextField
+                                id="summary"
+                                label="Summary"
+                                multiline={true}
+                                rows={4}
+                                className={classes.textArea}
+                                placeholder="Summary"
+                                helperText="Tell your story..."
+                                fullWidth
+                                margin="normal"
+                                onChange={this.handleChange}
+                                InputLabelProps={{
+                                    shrink: true,
+                                }}
+                            />
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
 
-
-                    <div className="input-field">
-                        <label htmlFor="title" >Title</label>
-                        <input required type="text" id="title" onChange={this.handleChange} />
-                    </div>
-
-                    <div className="input-field">
-
-                        <select required
-                            value={this.state.value}
-                            onChange={this.handleChange} id="countryName">
-
-                            {this.state.options && this.state.options.map((country, i) => {
-                                return (
-                                    <option htmlFor="countryName" key={i} value={country.label}>{country.label}</option>
-
-                                )
-                            })}
-                        </select>
-                        <label>Select City</label>
-                    </div>
-                    <div className="input-field">
-                        <select required onChange={this.handleChange} id="price">
-                            <option >Cheap</option>
-                            <option >Moderate</option>
-                            <option >Expensive</option>
-                        </select>
-                        <label htmlFor="price">Price</label>
-                    </div>
-                    <div className="input-field">
-                        <input id="duration" type="text" length="10" className="materialize-textarea" onChange={this.handleChange} />
-                        <label htmlFor="duration">Duration in hours</label>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="summary" >Summary</label>
-                        <textarea id="summary" cols="30" rows="10" className="materialize-textarea" onChange={this.handleChange}></textarea>
-                    </div>
-                    <div className="row">
-                        <div className="col s6 file-field input-field">
-                            <div className="btn">
-                                <span>File</span>
-                                <input accept="image/*" type="file" {...input} onChange={(e) => {
+                            <Input
+                                id="image-input"
+                                className={classes.input}
+                                accept="image/*"
+                                type="file"
+                                multiple
+                                {...input}
+                                onChange={(e) => {
                                     this.setState({ file: e.target.files[0], isUploading: true }, this.handleUpload)
                                 }} />
-                            </div>
-                            <div className="file-path-wrapper ">
-                                <input className="file-path validate" type="text" />
-                            </div>
-                            {this.state.isUploading && <div className="progress">
-                                <div className="determinate" style={progressBarUp}></div>
-                            </div>}
-                        </div>
-                        <div className="col s6">
+                            <label htmlFor="image-input">
+                                <Button component="span" className={classes.button}>
+                                    Upload Image
+        </Button>
 
-                            {this.state.photoURL && <img width="100px" src={this.state.photoURL} alt="" />}
-                        </div>
+                            </label>
+                        </Grid>
+                        <Grid item xs={12} sm={6}>
+                            <LinearProgress color="primary" variant="buffer" value={this.state.progress} valueBuffer={this.state.buffer} />
 
-                    </div>
-                    <div className="input-field">
+                        </Grid>
+                        {this.state.photoURL && <img width="100px" src={this.state.photoURL} alt="" />}
+
+                        <Grid item xs={12}>
+                            <Button variant="contained" color="primary" className={classes.button} onClick={this.handleSubmit}>
+                            Create
+                         </Button>
+                         </Grid>
+
+                    </Grid>
 
 
-
-
-                    </div>
-                    <div className="input-field">
-                        <button className="btn pink lighten-1 z-depth-0">Create</button>
-                    </div>
                 </form>
 
             </div>
@@ -186,7 +257,9 @@ export default compose(
     firestoreConnect([
         // { collection: 'cities', orderBy: ['createdAt', 'desc'] }
     ]),
-)(addPost)
+)(withStyles(styles)(addPost))
+
+
 
 // export default compose(
 //     connect(mapStatetoProps), 

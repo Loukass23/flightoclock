@@ -1,10 +1,11 @@
 import * as am4core from "@amcharts/amcharts4/core";
-import { theme } from '../theme';
+import theme from '../theme'
 
 
-const primary = '#ad1457'
+//const primary = '#ad1457'
 //const secondary = theme.palette.secondary.main
-
+const primary = theme.palette.primary.main
+const secondary = theme.palette.secondary.main
 
 export const myCountries = [{
     "id": "FR",
@@ -28,3 +29,4 @@ export const myCountries = [{
 },
 
 ]
+
