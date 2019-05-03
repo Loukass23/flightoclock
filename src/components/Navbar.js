@@ -1,4 +1,7 @@
 import React from 'react';
+import { compose } from 'redux'
+import { connect } from 'react-redux'
+import { firestoreConnect } from 'react-redux-firebase'
 import PropTypes from 'prop-types';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -23,9 +26,9 @@ import Logo1 from '../images/logo/flight 1 of 3.png'
 import Logo2 from '../images/logo/flight 2 of 3.png'
 import Logo3 from '../images/logo/flight 3 of 3.png'
 import { Link } from 'react-router-dom'
-import SignIn from '../components/auth/SignIn'
 import Icon from '@material-ui/core/Icon';
 import classNames from 'classnames';
+import { signOut } from '../store/actions/authActions'
 
 
 
@@ -128,11 +131,14 @@ class Navbar extends React.Component {
     handleMobileMenuClose = () => {
         this.setState({ mobileMoreAnchorEl: null });
     };
-
+    handleSignOut = () => {
+        this.handleMenuClose()
+        this.props.signOut()
+    }
 
     render() {
         const { anchorEl, mobileMoreAnchorEl, } = this.state;
-        const { classes } = this.props;
+        const { classes, auth } = this.props;
         const isMenuOpen = Boolean(anchorEl);
         const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
         const renderDrawer = (
@@ -197,7 +203,8 @@ class Navbar extends React.Component {
                 open={isMenuOpen}
                 onClose={this.handleMenuClose}
             >
-                <MenuItem onClick={this.handleMenuClose}>Profile</MenuItem>
+                {!auth.uid ? <MenuItem component={Link} to="/signin" onClick={this.handleMenuClose}>Sign In</MenuItem>
+                    : <MenuItem onClick={this.handleSignOut}>Sign Out</MenuItem>}
                 <MenuItem onClick={this.handleMenuClose}>My account</MenuItem>
             </Menu>
         );
@@ -215,7 +222,7 @@ class Navbar extends React.Component {
                     <IconButton color="inherit">
                         <AccountCircle />
                     </IconButton>
-                    <p>Log In</p>
+                    <p>Admin</p>
                 </MenuItem>
 
             </Menu>
@@ -277,4 +284,24 @@ Navbar.propTypes = {
     container: PropTypes.object,
 };
 
-export default withStyles(styles)(Navbar);
+const mapDispatchToProps = (dispatch) => {
+    return {
+
+        signOut: () => dispatch(signOut())
+
+    }
+}
+const mapStateToProps = (state) => {
+    console.log(state)
+    return {
+        auth: state.firebase.auth,
+
+    }
+}
+
+export default compose(
+    connect(mapStateToProps, mapDispatchToProps),
+    firestoreConnect([
+        // { collection: 'cities', orderBy: ['createdAt', 'desc'] }
+    ]),
+)(withStyles(styles)(Navbar))

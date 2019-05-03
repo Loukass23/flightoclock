@@ -80,7 +80,7 @@ class SignIn extends Component {
                         />
                     </Grid>
                     <Grid item xs={12}>
-                        <Button variant="contained" color="primary" className={classes.button}>
+                        <Button onClick={this.handleSubmit} variant="contained" color="primary" className={classes.button}>
                             LOGIN
       </Button>
 
