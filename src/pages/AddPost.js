@@ -19,6 +19,8 @@ import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
 import Input from '@material-ui/core/Input';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import Typography from '@material-ui/core/Typography';
+import { Redirect } from 'react-router'
 
 
 
@@ -35,9 +37,11 @@ const styles = theme => ({
     textArea: {
         marginLeft: theme.spacing.unit,
         marginRight: theme.spacing.unit,
-        width: 800,
+        width: 600,
     },
     input: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
         display: 'none',
     },
     inputLabel: {
@@ -46,7 +50,15 @@ const styles = theme => ({
         width: 200,
     },
     formControl: {
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
         marginTop: 12,
+    },
+    progress: {
+
+        marginLeft: theme.spacing.unit,
+        marginRight: theme.spacing.unit,
+        marginTop: 20,
     },
     dense: {
         marginTop: 19,
@@ -123,119 +135,112 @@ class addPost extends Component {
 
 
     render() {
-        const progressBarUp = {
-            width: this.state.progress + "%"
-        }
-        const { input, classes } = this.props
-        //if (!auth.uid) return <Redirect to='/signin' />
+
+        const { input, classes, auth } = this.props
+        if (!auth.uid) return <Redirect to='/signin' />
         console.log(this.props)
         return (
-            <div className="container">
-                <div className="row valign-wrapper">
-                    <div className="col s1" >
-                        <Link to='/posts'><div className="btn-floating btn-large waves-effect waves-light red lighten-3">
-                            <i className=" white-text lighten-3 fas fa-2x fa-arrow-left " /></div></Link>
-                    </div>
-                    <h4 className="col s11" >
-                        Add New Post
-                    </h4>
-                </div>
-                <form onSubmit={this.handleSubmit} className={classes.container} noValidate autoComplete="on">
-                    <Grid container>
-                        <Grid item xs={12} sm={6}>
-                            <TextField
-                                required
-                                id="title"
-                                label="Title"
-                                className={classes.textField}
-                                margin="normal"
-                                type="text"
-                                onChange={this.handleChange}
-                            />
-                        </Grid>
-
-                        <Grid item xs={12} sm={6}>
-                            <FormControl className={classes.formControl}>
-                                <InputLabel htmlFor="countryName">Country</InputLabel>
-                                <Select
-                                    native
-                                    value={this.state.value}
-                                    onChange={this.handleChange}
-                                    className={classes.inputLabel}
-                                    inputProps={{
-                                        name: 'country',
-                                        id: 'countryName',
-                                    }}
-                                >
-                                    {this.state.options && this.state.options.map((country, i) => {
-                                        return (
-                                            <option htmlFor="countryName"
-                                                key={i} value={country.label}>
-                                                {country.label}
-                                            </option>
-                                        )
-                                    })}
-                                </Select>
-                            </FormControl>
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                id="summary"
-                                label="Summary"
-                                multiline={true}
-                                rows={4}
-                                className={classes.textArea}
-                                placeholder="Summary"
-                                helperText="Tell your story..."
-                                fullWidth
-                                margin="normal"
-                                onChange={this.handleChange}
-                                InputLabelProps={{
-                                    shrink: true,
-                                }}
-                            />
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-
-                            <Input
-                                id="image-input"
-                                className={classes.input}
-                                accept="image/*"
-                                type="file"
-                                multiple
-                                {...input}
-                                onChange={(e) => {
-                                    this.setState({ file: e.target.files[0], isUploading: true }, this.handleUpload)
-                                }} />
-                            <label htmlFor="image-input">
-                                <Button component="span" className={classes.button}>
-                                    Upload Image
-        </Button>
-
-                            </label>
-                        </Grid>
-                        <Grid item xs={12} sm={6}>
-                            <LinearProgress color="primary" variant="buffer" value={this.state.progress} valueBuffer={this.state.buffer} />
-
-                        </Grid>
-                        {this.state.photoURL && <img width="100px" src={this.state.photoURL} alt="" />}
-
-                        <Grid item xs={12}>
-                            <Button variant="contained" color="primary" className={classes.button} onClick={this.handleSubmit}>
-                            Create
-                         </Button>
-                         </Grid>
-
+            <React.Fragment>
+                <Grid container spacing={24}>
+                    <Grid item xs={12} >
+                        <Typography color="primary" variant="h6" gutterBottom>
+                            New Travel Post
+                        </Typography>
                     </Grid>
 
+                    <Grid item xs={12} sm={6}>
+                        <TextField
+                            required
+                            id="title"
+                            label="Title"
+                            className={classes.textField}
+                            margin="normal"
+                            type="text"
+                            onChange={this.handleChange}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="countryName">Country</InputLabel>
+                            <Select
+                                native
+                                value={this.state.value}
+                                onChange={this.handleChange}
+                                className={classes.inputLabel}
+                                inputProps={{
+                                    name: 'country',
+                                    id: 'countryName',
+                                }}
+                            >
+                                {this.state.options && this.state.options.map((country, i) => {
+                                    return (
+                                        <option htmlFor="countryName"
+                                            key={i} value={country.label}>
+                                            {country.label}
+                                        </option>
+                                    )
+                                })}
+                            </Select>
+                        </FormControl>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <TextField
+                            id="summary"
+                            label="Summary"
+                            multiline={true}
+                            rows={4}
+                            className={classes.textArea}
+                            placeholder="Summary"
+                            helperText="Tell your story..."
+                            fullWidth
+                            margin="normal"
+                            onChange={this.handleChange}
+                            InputLabelProps={{
+                                shrink: true,
+                            }}
+                        />
+                    </Grid>
+                    <Grid item xs={12} sm={6} >
+                        <Input
+                            id="image-input"
+                            className={classes.input}
+                            accept="image/*"
+                            type="file"
+                            multiple
+                            {...input}
+                            onChange={(e) => {
+                                this.setState({ file: e.target.files[0], isUploading: true }, this.handleUpload)
+                            }} />
+                        <label htmlFor="image-input">
+                            <Button variant="outlined" color="secondary" component="span" className={classes.button}>
+                                Cover Image
+                                </Button>
 
-                </form>
+                        </label>
+                    </Grid>
+                    <Grid item xs={12} sm={6}>
+                        <LinearProgress color="secondary" variant="buffer" value={this.state.progress} valueBuffer={this.state.buffer} className={classes.progress} />
+                    </Grid>
+                    <Grid item xs={12}>
+                        {this.state.photoURL && <img width="100px" src={this.state.photoURL} alt="" />}
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button component={Link} to="/post" variant="contained" className={classes.button} onClick={this.handleSubmit}>
+                            Cancel
+                         </Button>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Button variant="contained" color="primary" className={classes.button} onClick={this.handleSubmit}>
+                            Create
+                         </Button>
+                    </Grid>
 
-            </div>
+                </Grid>
+            </React.Fragment>
+
         )
     }
 }
-
 const mapDispatchToProps = (dispatch) => {
     return {
 
@@ -243,7 +248,6 @@ const mapDispatchToProps = (dispatch) => {
 
     }
 }
-
 const mapStateToProps = (state) => {
     console.log(state)
     return {

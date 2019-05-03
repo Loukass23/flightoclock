@@ -7,8 +7,41 @@ import { Link } from 'react-router-dom'
 import firebase from "firebase";
 import { withFirestore, isLoaded, isEmpty } from 'react-redux-firebase'
 import Post from '../components/Post'
+import GridList from '@material-ui/core/GridList';
+import GridListTile from '@material-ui/core/GridListTile';
+import GridListTileBar from '@material-ui/core/GridListTileBar';
+import IconButton from '@material-ui/core/IconButton';
+import StarBorderIcon from '@material-ui/icons/StarBorder';
+import { withStyles } from '@material-ui/core/styles';
+import Loader from 'react-loader-spinner'
+import Fab from '@material-ui/core/Fab';
+import AddIcon from '@material-ui/icons/Add';
 
 
+
+const styles = theme => ({
+    root: {
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        backgroundColor: theme.palette.background.paper,
+    },
+    gridList: {
+        // width: 500,
+        // height: 450,
+        // Promote the list into his own layer on Chrome. This cost memory but helps keeping high FPS.
+        transform: 'translateZ(0)',
+    },
+    titleBar: {
+        background:
+            'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
+            'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+    },
+    icon: {
+        color: 'primary',
+    },
+});
 
 
 
@@ -43,33 +76,64 @@ class Posts extends Component {
     }
 
     render() {
-        const { posts } = this.props;
+        const { posts, classes, auth } = this.props;
         console.log(this.props)
         return (
-            <div className="dashboard container">
-                <div className="row valign-wrapper" >
-                    <div className="col s1" >
-                        <Link to='/city'><div className="btn-floating btn-medium waves-effect waves-light red lighten-3">
-                            <i className=" white-text lighten-3 fas fa-2x fa-arrow-left " /></div></Link>
-                    </div>
-                    <h4 className="col s11" >
-                        {/* {city} */}
-                    </h4>
-                </div>
+            <div className={classes.root}>
 
-                {posts && posts.map(post => {
-                    return (
-
-                        <Post post={post} key={post.id} />
-
-                    )
-                })}
-                <div className="row">
-                    <Link to='/posts/add'><div className="btn-floating btn-large waves-effect waves-light red lighten-3">
-                        <i className="material-icons">add</i></div></Link>
-                </div>
+                <GridList cellHeight={200} spacing={1} className={classes.gridList}>
+                    {!posts && <Loader
+                        type="Plane"
+                        color="primary"
+                        height="100"
+                        width="100"
+                    />}
+                    {posts && posts.map(post => (
+                        <GridListTile key={post.id} >
+                            <img src={post.photoURL} alt={post.title} />
+                            <GridListTileBar
+                                title={post.title}
+                                titlePosition="top"
+                                actionIcon={
+                                    <IconButton className={classes.icon}>
+                                        <StarBorderIcon />
+                                    </IconButton>
+                                }
+                                actionPosition="left"
+                                className={classes.titleBar}
+                            />
+                        </GridListTile>
+                    ))}
+                </GridList>
+                {auth.uid && posts && <Fab component={Link} to="/posts/add" color="primary" aria-label="Add" className={classes.fab}>
+                    <AddIcon />
+                </Fab>}
 
             </div>
+            // <div className="dashboard container">
+            //     <div className="row valign-wrapper" >
+            //         <div className="col s1" >
+            //             <Link to='/city'><div className="btn-floating btn-medium waves-effect waves-light red lighten-3">
+            //                 <i className=" white-text lighten-3 fas fa-2x fa-arrow-left " /></div></Link>
+            //         </div>
+            //         <h4 className="col s11" >
+            //             {/* {city} */}
+            //         </h4>
+            //     </div>
+
+            //     {posts && posts.map(post => {
+            //         return (
+
+            //             <Post post={post} key={post.id} />
+
+            //         )
+            //     })}
+            //     <div className="row">
+            //         <Link to='/posts/add'><div className="btn-floating btn-large waves-effect waves-light red lighten-3">
+            //             <i className="material-icons">add</i></div></Link>
+            //     </div>
+
+            // </div>
         )
     }
 }
@@ -89,6 +153,8 @@ const mapStateToProps = (state, ownProps) => {
 
     return {
         posts: state.firestore.ordered.posts,
+        auth: state.firebase.auth,
+
         // city: cityStr,
         // cities: cities
         // auth: state.firebase.auth,
@@ -97,6 +163,7 @@ const mapStateToProps = (state, ownProps) => {
 }
 const fconnect = firestoreConnect([
     { collection: 'posts', orderBy: ['createdAt', 'desc'] },
+
     //{ collection: 'cities', orderBy: ['createdAt', 'desc'] }
 
     // {
@@ -111,7 +178,7 @@ const fconnect = firestoreConnect([
 //export default connect(mapStateToProps)(ItineraryChoice)
 export default compose(
     connect(mapStateToProps),
-    fconnect)(Posts)
+    fconnect)(withStyles(styles)(Posts))
 
 
 // const enhance = compose(
