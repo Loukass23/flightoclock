@@ -46,7 +46,7 @@ class Map extends Component {
 
         const primary = this.props.theme.palette.primary.main
         const secondary = this.props.theme.palette.secondary.main
-
+        console.log(secondary)
         // Set map definition
         chart.geodata = am4geodata_worldLow;
 

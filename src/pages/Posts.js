@@ -34,9 +34,9 @@ const styles = theme => ({
         transform: 'translateZ(0)',
     },
     titleBar: {
-        background:
-            'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, ' +
-            'rgba(0,0,0,0.3) 70%, rgba(0,0,0,0) 100%)',
+        background: theme.palette.secondary.light,
+        opacity: '0.7'
+
     },
     icon: {
         color: 'primary',
@@ -52,6 +52,7 @@ class Posts extends Component {
         myCity: null
     }
     componentDidMount() {
+
         // const param = this.props.match.params.name
 
         // firebase
@@ -81,7 +82,7 @@ class Posts extends Component {
         return (
             <div className={classes.root}>
 
-                <GridList cellHeight={200} spacing={1} className={classes.gridList}>
+                <GridList cellHeight={200} spacing={0} className={classes.gridList}>
                     {!posts && <Loader
                         type="Plane"
                         color="primary"
@@ -89,16 +90,16 @@ class Posts extends Component {
                         width="100"
                     />}
                     {posts && posts.map(post => (
-                        <GridListTile key={post.id} >
+                        <GridListTile component={Link} to={"/posts/" + post.id} key={post.id} >
                             <img src={post.photoURL} alt={post.title} />
                             <GridListTileBar
                                 title={post.title}
                                 titlePosition="top"
-                                actionIcon={
-                                    <IconButton className={classes.icon}>
-                                        <StarBorderIcon />
-                                    </IconButton>
-                                }
+                                // actionIcon={
+                                //     <IconButton className={classes.icon}>
+                                //         <StarBorderIcon />
+                                //     </IconButton>
+                                // }
                                 actionPosition="left"
                                 className={classes.titleBar}
                             />

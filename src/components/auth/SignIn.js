@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 import { Grid } from '@material-ui/core'
 import Fab from '@material-ui/core/Fab';
-
+import Divider from '@material-ui/core/Divider';
 
 
 const styles = theme => ({
@@ -53,11 +53,28 @@ class SignIn extends Component {
     }
     render() {
         const { authErr, classes, auth } = this.props
-        // if (auth.uid) return <Redirect to='/' />
+        if (auth.uid) return <Redirect to='/' />
         return (
             <form onSubmit={this.handleSubmit} className={classes.container} noValidate autoComplete="on">
-                <Grid container>
-                    <Grid item xs={12}>
+                <Grid container
+                    spacing={0}
+                    alignItems="center"
+                    justify="center">
+                    <Grid item xs={6}>
+                        <p className='col s8' >Google sign in</p>
+                    </Grid>
+                    <Grid item xs={6}>
+                        <Fab size="medium" onClick={this.handleGoogleButton} color="primary" aria-label="Add" className={classes.fab}>
+                            <i className=" white-text lighten-3 fab fa-1x fa-google" />
+                        </Fab>
+
+
+                    </Grid>
+                    <Grid item xs={6}>
+                        <p className='col s8' >Email sign in</p>
+                    </Grid>
+                    <hr />
+                    <Grid item xs={12} >
                         <TextField
                             required
                             id="email"
@@ -69,7 +86,7 @@ class SignIn extends Component {
                             onChange={this.handleChange}
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} >
                         <TextField
                             id="standard-password-input"
                             label="Password"
@@ -79,24 +96,18 @@ class SignIn extends Component {
                             margin="normal"
                         />
                     </Grid>
-                    <Grid item xs={12}>
+                    <Grid item xs={12} >
                         <Button onClick={this.handleSubmit} variant="contained" color="primary" className={classes.button}>
                             LOGIN
-      </Button>
+                    </Button>
+
 
                         <div className="red-text-center">
                             {authErr ? <p>{authErr}</p> : null}
                         </div>
                     </Grid>
 
-                    <Grid item xs={12}>
-                        <p className='col s8' >Google account</p>
-                        <Fab onClick={this.handleGoogleButton} color="primary" aria-label="Add" className={classes.fab}>
-                            <i className=" white-text lighten-3 fab fa-2x fa-google" />
-                        </Fab>
 
-
-                    </Grid>
 
                 </Grid>
             </form >
